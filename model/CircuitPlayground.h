@@ -44,6 +44,7 @@ DEALINGS IN THE SOFTWARE.
 #include "MultiButton.h"
 #include "MbedPin.h"
 #include "MbedI2C.h"
+#include "CPlayI2C.h"
 #include "MbedSPI.h"
 #include "LIS3DH.h"
 #include "LinearAnalogSensor.h"
@@ -84,15 +85,15 @@ namespace codal
 
         MessageBus                  messageBus;
         CPlayTimer                  timer;
-        mbed::Serial                serial;
         CircuitPlaygroundIO         io;
+        _mbed::Serial               serial;
         Button                      buttonA;
         Button                      buttonB;
         Button                      buttonC;
         MultiButton                 buttonAB;
 
-        mbed::I2C                   i2c;
-        mbed::SPI                   flashSPI;
+        CPlayI2C                    i2c;
+        _mbed::SPI                  flashSPI;
         CoordinateSpace             coordinateSpace;
         LIS3DH                      accelerometer;
         NonLinearAnalogSensor       thermometer;

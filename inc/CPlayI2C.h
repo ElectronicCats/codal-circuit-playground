@@ -22,30 +22,28 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#include "CPlayTimer.h"
-#include "Event.h"
-#include "CodalCompat.h"
+#ifndef CPLAY_I2C_H
+#define CPLAY_I2C_H
+
+#include "CodalConfig.h"
 #include "ErrorNo.h"
-#include "codal_target_hal.h"
-#include "CodalDmesg.h"
+#include "MbedI2C.h"
 
-using namespace codal;
-
-/**
- * Constructor for a generic system clock interface.
- */
-CPlayTimer::CPlayTimer() : codal::_mbed::Timer()
+namespace codal
 {
+    class CPlayI2C : public codal::_mbed::I2C
+    {
+    public:
+
+        /**
+          * Constructor for a generic system clock interface.
+          */
+        CPlayI2C(codal::Pin& sda, codal::Pin& scl);
+
+        virtual int write(uint16_t address, uint8_t *data, int len, bool repeated);
+
+        virtual int read(uint16_t address, uint8_t *data, int len, bool repeated);
+    };
 }
 
-int CPlayTimer::disableInterrupts()
-{
-    NVIC_DisableIRQ(TC4_IRQn);
-    return DEVICE_OK;
-}
-
-int CPlayTimer::enableInterrupts()
-{
-    NVIC_EnableIRQ(TC4_IRQn);
-    return DEVICE_OK;
-}
+#endif
